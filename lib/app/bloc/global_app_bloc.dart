@@ -7,7 +7,17 @@ part 'global_app_state.dart';
 class GlobalAppBloc extends Bloc<GlobalAppEvent, GlobalAppState> {
   GlobalAppBloc() : super(GlobalAppInitial()) {
     on<GlobalAppEvent>((event, emit) {
-      // TODO: implement event handler
+      switch (event.runtimeType) {
+        case OpenNotes:
+          emit(GlobalAppNotesOpened());
+          break;
+        case OpenCalculator:
+          emit(GlobalAppCalculatorOpened());
+          break;
+        case OpenCalculatorHistory:
+          emit(GlobalAppHistoryOpened());
+          break;
+      }
     });
   }
 }
