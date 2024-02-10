@@ -1,3 +1,4 @@
+import 'package:currency_exchange/app/bloc/global_app_bloc.dart';
 import 'package:currency_exchange/currency_converter/bloc/currency_bloc.dart';
 import 'package:currency_exchange/notes/bloc/note_bloc.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,9 @@ class MyApp extends StatelessWidget {
           ),
           BlocProvider<CurrencyBloc>(
             create: (context) => CurrencyBloc(),
+          ),
+          BlocProvider<GlobalAppBloc>(
+            create: (context) => GlobalAppBloc(),
           ),
         ],
         child: const MyHomePage(title: 'Flutter Demo Home Page'),
