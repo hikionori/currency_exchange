@@ -1,0 +1,7 @@
+Todo:
+    ☐ Currency conversion
+        ✔ Model for currency conversion @done(24-02-07 18:07)
+        ✔ Service for currency conversion @done(24-02-07 18:07)
+        ✔ Bloc for currency conversion @done(24-02-08 17:56)
+        ☐ View for currency conversion
+        ✔ Add tests for currency conversion @done(24-02-08 17:56)
