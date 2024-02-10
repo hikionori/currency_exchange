@@ -6,3 +6,9 @@ sealed class GlobalAppEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+final class OpenNotes extends GlobalAppEvent {}
+
+final class OpenCalculator extends GlobalAppEvent {}
+
+final class OpenCalculatorHistory extends GlobalAppEvent {}
