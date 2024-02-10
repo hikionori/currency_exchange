@@ -1,13 +1,13 @@
-part of 'global_app_bloc.dart';
+part of 'global_app_layout_bloc.dart';
 
-sealed class GlobalAppState extends Equatable {
-  const GlobalAppState();
+sealed class GlobalAppLayoutState extends Equatable {
+  const GlobalAppLayoutState();
 
   @override
   List<Object> get props => [];
 }
 
-final class GlobalAppInitial extends GlobalAppState {
+final class GlobalAppInitial extends GlobalAppLayoutState {
   final bool isSplited = false;
   final bool notesIsVisible = false;
   final bool calculatorIsVisible = false;
@@ -17,7 +17,7 @@ final class GlobalAppInitial extends GlobalAppState {
   final NotesModuleState notesModuleState = NotesModuleState.hidden;
 }
 
-final class GlobalAppNotesOpened extends GlobalAppState {
+final class GlobalAppNotesOpened extends GlobalAppLayoutState {
   final bool isSplited = true;
   final bool notesIsVisible = true;
   final bool calculatorIsVisible = false;
@@ -27,7 +27,7 @@ final class GlobalAppNotesOpened extends GlobalAppState {
   final NotesModuleState notesModuleState = NotesModuleState.full;
 }
 
-final class GlobalAppCalculatorOpened extends GlobalAppState {
+final class GlobalAppCalculatorOpened extends GlobalAppLayoutState {
   final bool isSplited = true;
   final bool notesIsVisible = false;
   final bool calculatorIsVisible = true;
@@ -37,7 +37,7 @@ final class GlobalAppCalculatorOpened extends GlobalAppState {
   final NotesModuleState notesModuleState = NotesModuleState.hidden;
 }
 
-final class GlobalAppBothOpened extends GlobalAppState {
+final class GlobalAppBothOpened extends GlobalAppLayoutState {
   final bool isSplited = true;
   final bool notesIsVisible = true;
   final bool calculatorIsVisible = true;
@@ -46,7 +46,7 @@ final class GlobalAppBothOpened extends GlobalAppState {
   final NotesModuleState notesModuleState = NotesModuleState.mid;
 }
 
-final class GlobalAppHistoryOpened extends GlobalAppState {
+final class GlobalAppHistoryOpened extends GlobalAppLayoutState {
   final bool isSplited = true;
   final bool notesIsVisible = false;
   final bool calculatorIsVisible = true;
@@ -56,7 +56,7 @@ final class GlobalAppHistoryOpened extends GlobalAppState {
   final NotesModuleState notesModuleState = NotesModuleState.hidden;
 }
 
-final class GlobalAppHistoryWithNotesOpened extends GlobalAppState {
+final class GlobalAppHistoryWithNotesOpened extends GlobalAppLayoutState {
   final bool isSplited = true;
   final bool notesIsVisible = true;
   final bool calculatorIsVisible = true;
