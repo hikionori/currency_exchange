@@ -1,5 +1,6 @@
 // FILEPATH: /home/hikionori/Documents/Projects/currency_exchange/test/currency_converter/bloc/currency_bloc_test.dart
 import 'package:bloc_test/bloc_test.dart';
+import 'package:currency_exchange/app/constants.dart';
 import 'package:currency_exchange/currency_converter/bloc/currency_bloc.dart';
 import 'package:currency_exchange/currency_converter/models/currency_converting_model.dart';
 import 'package:currency_exchange/currency_converter/services/currency_converting_service.dart';
@@ -28,15 +29,20 @@ extension Throwable on When<Future<Map<String, String>>> {
 }
 
 void main() {
-  late CurrencyBloc currencyBloc;
   late MockCurrencyConvertingService mockCurrencyConvertingService;
+  late CurrencyBloc currencyBloc;
 
   setUp(() {
     mockCurrencyConvertingService = MockCurrencyConvertingService();
-    currencyBloc = CurrencyBloc(mockCurrencyConvertingService);
+    getIt.registerSingleton<CurrencyConvertingService>(
+        mockCurrencyConvertingService);
+    currencyBloc = CurrencyBloc();
   });
 
-  tearDown(() => currencyBloc.close());
+  tearDown(() {
+    getIt.reset();
+    currencyBloc.close();
+  });
 
   blocTest<CurrencyBloc, CurrencyState>(
     'emits [CurrencyLoading, CurrenciesLoaded] when FetchCurrencies is added',
