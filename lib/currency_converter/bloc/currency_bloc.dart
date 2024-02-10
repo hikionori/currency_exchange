@@ -12,22 +12,22 @@ class CurrencyBloc extends Bloc<CurrencyEvent, CurrencyState> {
       getIt.get<CurrencyConvertingService>();
 
   CurrencyBloc() : super(CurrencyInitial()) {
-    on<CurrencyEvent>((event, emit) {
+    on<CurrencyEvent>((event, emit) async {
       switch (event.runtimeType) {
         case FetchCurrencies:
-          _handleFetchCurrencies(event as FetchCurrencies, emit);
+          await _handleFetchCurrencies(event as FetchCurrencies, emit);
           break;
         case ConvertCurrency:
-          _handleCurrencyConversion(event as ConvertCurrency, emit);
+          await _handleCurrencyConversion(event as ConvertCurrency, emit);
           break;
         case RefreshCurrencies:
-          _handleFetchCurrencies(FetchCurrencies(), emit);
+          await _handleFetchCurrencies(FetchCurrencies(), emit);
           break;
       }
     });
   }
 
-  void _handleFetchCurrencies(
+  Future _handleFetchCurrencies(
       FetchCurrencies event, Emitter<CurrencyState> emit) async {
     try {
       emit(CurrencyLoading());
@@ -38,7 +38,7 @@ class CurrencyBloc extends Bloc<CurrencyEvent, CurrencyState> {
     }
   }
 
-  void _handleCurrencyConversion(
+  Future _handleCurrencyConversion(
       ConvertCurrency event, Emitter<CurrencyState> emit) async {
     try {
       emit(CurrencyLoading());
