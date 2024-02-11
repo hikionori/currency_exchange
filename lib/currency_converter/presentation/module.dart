@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:currency_exchange/currency_converter/bloc/currency_bloc.dart';
 import 'package:currency_exchange/currency_converter/presentation/widgets/convert_button.dart';
 import 'package:currency_exchange/currency_converter/presentation/widgets/currency_input_field.dart';
@@ -6,8 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CurrencyConverterModule extends StatefulWidget {
-
-  
   const CurrencyConverterModule({super.key});
 
   @override
@@ -16,21 +16,25 @@ class CurrencyConverterModule extends StatefulWidget {
 }
 
 class _CurrencyConverterModuleState extends State<CurrencyConverterModule> {
+  StreamSubscription? _subscription;
+
   final List<String> _currencies = [];
 
   final TextEditingController _fromController = TextEditingController();
   final TextEditingController _toController = TextEditingController();
 
   final TextEditingController _fromCurrencyController =
-      TextEditingController(text: "usd");
+      TextEditingController(text: 'usd');
   final TextEditingController _toCurrencyController =
-      TextEditingController(text: "uah");
+      TextEditingController(text: 'uah');
 
   @override
   void initState() {
+    super.initState();
     BlocProvider.of<CurrencyBloc>(context).add(FetchCurrencies());
     // now read the bloc and place state from CurrenciesLoaded to the _currencies list
-    BlocProvider.of<CurrencyBloc>(context).stream.listen((state) {
+    _subscription =
+        BlocProvider.of<CurrencyBloc>(context).stream.listen((state) {
       if (state is CurrenciesLoaded) {
         setState(() {
           _currencies.clear();
@@ -38,7 +42,12 @@ class _CurrencyConverterModuleState extends State<CurrencyConverterModule> {
         });
       }
     });
-    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _subscription?.cancel();
+    super.dispose();
   }
 
   @override
@@ -57,7 +66,7 @@ class _CurrencyConverterModuleState extends State<CurrencyConverterModule> {
             context.read<CurrencyBloc>().add(WaitActions());
           }
           return Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               const LayoutControlButtons(),
               Row(
