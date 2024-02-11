@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CurrencyConverterModule extends StatefulWidget {
+
+  
   const CurrencyConverterModule({super.key});
 
   @override
@@ -14,7 +16,7 @@ class CurrencyConverterModule extends StatefulWidget {
 }
 
 class _CurrencyConverterModuleState extends State<CurrencyConverterModule> {
-  final List<String> _currencies = ["usd", "eur", "uah"];
+  final List<String> _currencies = [];
 
   final TextEditingController _fromController = TextEditingController();
   final TextEditingController _toController = TextEditingController();
@@ -22,7 +24,7 @@ class _CurrencyConverterModuleState extends State<CurrencyConverterModule> {
   final TextEditingController _fromCurrencyController =
       TextEditingController(text: "usd");
   final TextEditingController _toCurrencyController =
-      TextEditingController(text: "usd");
+      TextEditingController(text: "uah");
 
   @override
   void initState() {
