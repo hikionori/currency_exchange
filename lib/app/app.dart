@@ -1,4 +1,3 @@
-import 'package:currency_exchange/app/bloc/global_app_layout_bloc.dart';
 import 'package:currency_exchange/app/theme.dart';
 import 'package:currency_exchange/currency_converter/bloc/currency_bloc.dart';
 import 'package:currency_exchange/currency_converter/presentation/module.dart';
@@ -25,9 +24,9 @@ class MyApp extends StatelessWidget {
           BlocProvider<CurrencyBloc>(
             create: (context) => CurrencyBloc(),
           ),
-          BlocProvider<GlobalAppLayoutBloc>(
-            create: (context) => GlobalAppLayoutBloc(),
-          ),
+          // BlocProvider<GlobalLayoutCubit>(
+          //   create: (context) => GlobalLayoutCubit(),
+          // ),
         ],
         child: const MainPage(),
       ),
@@ -45,13 +44,31 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       backgroundColor: BaseColors.background,
       body: Center(
-          child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [CurrencyConverterModule()],
-      )),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            const CurrencyConverterModule(),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Container(
+                  width: 200,
+                  height: 200,
+                  color: Colors.red,
+                ),
+                Container(
+                  width: 200,
+                  height: 200,
+                  color: Colors.blue,
+                )
+              ],
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

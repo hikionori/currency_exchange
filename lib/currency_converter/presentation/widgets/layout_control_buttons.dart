@@ -13,13 +13,12 @@ class LayoutControlButtons extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         Container(
-          decoration: const BoxDecoration(
+          decoration: BoxDecoration(
             color: BaseColors.layoutButton,
-            borderRadius: BorderRadius.all(Radius.circular(20)),
+            borderRadius: const BorderRadius.all(Radius.circular(20)),
           ),
           child: Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
             child: Center(
               child: GestureDetector(
                 onTap: () {
@@ -50,8 +49,7 @@ class LayoutControlButtons extends StatelessWidget {
             borderRadius: BorderRadius.all(Radius.circular(20)),
           ),
           child: Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
             child: Center(
               child: GestureDetector(
                 onTap: () {

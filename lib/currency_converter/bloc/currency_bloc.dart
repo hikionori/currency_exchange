@@ -23,6 +23,10 @@ class CurrencyBloc extends Bloc<CurrencyEvent, CurrencyState> {
         case RefreshCurrencies:
           await _handleFetchCurrencies(FetchCurrencies(), emit);
           break;
+        case WaitActions:
+        // set state to initial
+          emit(CurrencyInitial());
+          break;
       }
     });
   }

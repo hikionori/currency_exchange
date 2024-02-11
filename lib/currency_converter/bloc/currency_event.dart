@@ -25,3 +25,5 @@ final class ConvertCurrency extends CurrencyEvent {
 }
 
 final class RefreshCurrencies extends CurrencyEvent {}
+
+final class WaitActions extends CurrencyEvent {}
