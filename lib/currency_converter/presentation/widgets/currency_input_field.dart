@@ -28,7 +28,7 @@ class _CurrencyInputFieldState extends State<CurrencyInputField> {
       },
       builder: (context, state) {
         return AnimatedContainer(
-          duration: const Duration(milliseconds: 300),
+          duration: const Duration(milliseconds: 400),
           width: state == LayoutState.initial ? 370 : 320,
           height: 50,
           decoration: BoxDecoration(

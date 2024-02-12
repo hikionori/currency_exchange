@@ -4,7 +4,7 @@ part 'note_model.g.dart';
 
 @collection
 class Note {
-  Id id = Isar.autoIncrement;
+  Id? id = null;
 
   String? title;
   String? content;

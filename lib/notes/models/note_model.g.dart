@@ -94,6 +94,7 @@ Note _noteDeserialize(
   final object = Note();
   object.content = reader.readStringOrNull(offsets[0]);
   object.createdAt = reader.readDateTimeOrNull(offsets[1]);
+  object.id = id;
   object.title = reader.readStringOrNull(offsets[2]);
   object.updatedAt = reader.readDateTimeOrNull(offsets[3]);
   return object;
@@ -120,14 +121,16 @@ P _noteDeserializeProp<P>(
 }
 
 Id _noteGetId(Note object) {
-  return object.id;
+  return object.id ?? Isar.autoIncrement;
 }
 
 List<IsarLinkBase<dynamic>> _noteGetLinks(Note object) {
   return [];
 }
 
-void _noteAttach(IsarCollection<dynamic> col, Id id, Note object) {}
+void _noteAttach(IsarCollection<dynamic> col, Id id, Note object) {
+  object.id = id;
+}
 
 extension NoteQueryWhereSort on QueryBuilder<Note, Note, QWhere> {
   QueryBuilder<Note, Note, QAfterWhere> anyId() {
@@ -418,7 +421,23 @@ extension NoteQueryFilter on QueryBuilder<Note, Note, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Note, Note, QAfterFilterCondition> idEqualTo(Id value) {
+  QueryBuilder<Note, Note, QAfterFilterCondition> idIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'id',
+      ));
+    });
+  }
+
+  QueryBuilder<Note, Note, QAfterFilterCondition> idIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'id',
+      ));
+    });
+  }
+
+  QueryBuilder<Note, Note, QAfterFilterCondition> idEqualTo(Id? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'id',
@@ -428,7 +447,7 @@ extension NoteQueryFilter on QueryBuilder<Note, Note, QFilterCondition> {
   }
 
   QueryBuilder<Note, Note, QAfterFilterCondition> idGreaterThan(
-    Id value, {
+    Id? value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -441,7 +460,7 @@ extension NoteQueryFilter on QueryBuilder<Note, Note, QFilterCondition> {
   }
 
   QueryBuilder<Note, Note, QAfterFilterCondition> idLessThan(
-    Id value, {
+    Id? value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -454,8 +473,8 @@ extension NoteQueryFilter on QueryBuilder<Note, Note, QFilterCondition> {
   }
 
   QueryBuilder<Note, Note, QAfterFilterCondition> idBetween(
-    Id lower,
-    Id upper, {
+    Id? lower,
+    Id? upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {

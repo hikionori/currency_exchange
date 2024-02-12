@@ -20,6 +20,8 @@ void main() async {
   );
 
   await windowManager.waitUntilReadyToShow(options, () async {
+    await windowManager.setTitle("ValutaVerse");
+    await windowManager.setIcon('assets/app_logo.png');
     await windowManager.show();
     await windowManager.setSize(options.size!);
 
@@ -29,7 +31,6 @@ void main() async {
     await windowManager.setFullScreen(false);
 
     await windowManager.setAlwaysOnTop(false);
-    await windowManager.setTitle("ValutaVerse");
     await windowManager.focus();
   });
 

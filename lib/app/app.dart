@@ -149,7 +149,7 @@ class _MainPageState extends State<MainPage>
                       ? const SizedBox(height: 20)
                       : const SizedBox(),
                   AnimatedContainer(
-                    duration: const Duration(milliseconds: 300),
+                    duration: const Duration(milliseconds: 200),
                     width: calculatorWidth,
                     height: calculatorHeight,
                     child: Transform.translate(

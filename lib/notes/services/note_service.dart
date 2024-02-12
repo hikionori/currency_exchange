@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:currency_exchange/app/constants.dart';
 import 'package:currency_exchange/notes/models/note_model.dart';
 import 'package:isar/isar.dart';
