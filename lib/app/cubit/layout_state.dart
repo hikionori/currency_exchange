@@ -5,4 +5,6 @@ enum LayoutState {
   calculator,
   notes,
   both,
+  bothWithHistory,
+  calculatorWithHistory,
 }

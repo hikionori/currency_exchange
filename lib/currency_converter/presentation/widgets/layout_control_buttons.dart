@@ -24,17 +24,20 @@ class _LayoutControlButtonsState extends State<LayoutControlButtons> {
             Container(
               decoration: BoxDecoration(
                 // color: BaseColors.layoutButton,
-                color:
-                    state == LayoutState.calculator || state == LayoutState.both
-                        ? BaseColors.layoutButtonActive
-                        : BaseColors.layoutButton,
+                color: state == LayoutState.calculator ||
+                        state == LayoutState.both ||
+                        state == LayoutState.bothWithHistory ||
+                        state == LayoutState.calculatorWithHistory
+                    ? BaseColors.layoutButtonActive
+                    : BaseColors.layoutButton,
                 borderRadius: const BorderRadius.all(Radius.circular(20)),
-                border:
-                    state == LayoutState.calculator || state == LayoutState.both
-                        ? Border.all(
-                            color: BaseColors.layoutButtonActiveBorder,
-                            width: 2)
-                        : null,
+                border: state == LayoutState.calculator ||
+                        state == LayoutState.both ||
+                        state == LayoutState.bothWithHistory ||
+                        state == LayoutState.calculatorWithHistory
+                    ? Border.all(
+                        color: BaseColors.layoutButtonActiveBorder, width: 2)
+                    : null,
               ),
               child: Padding(
                 padding:
@@ -65,11 +68,15 @@ class _LayoutControlButtonsState extends State<LayoutControlButtons> {
             ),
             Container(
               decoration: BoxDecoration(
-                color: state == LayoutState.notes || state == LayoutState.both
+                color: state == LayoutState.notes ||
+                        state == LayoutState.both ||
+                        state == LayoutState.bothWithHistory
                     ? BaseColors.layoutButtonActive
                     : BaseColors.layoutButton,
                 borderRadius: const BorderRadius.all(Radius.circular(20)),
-                border: state == LayoutState.notes || state == LayoutState.both
+                border: state == LayoutState.notes ||
+                        state == LayoutState.both ||
+                        state == LayoutState.bothWithHistory
                     ? Border.all(
                         color: BaseColors.layoutButtonActiveBorder, width: 2)
                     : null,

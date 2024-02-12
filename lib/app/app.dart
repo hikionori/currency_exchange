@@ -80,11 +80,25 @@ class _MainPageState extends State<MainPage>
                     width: state == LayoutState.initial ||
                             state == LayoutState.calculator
                         ? 0
-                        : 200,
+                        : state == LayoutState.notes ||
+                                state == LayoutState.both ||
+                                state == LayoutState.bothWithHistory
+                            ? 310
+                            : state == LayoutState.calculatorWithHistory
+                                ? 0
+                                : 310, // 200 is default value that never been reached
                     height: state == LayoutState.initial ||
                             state == LayoutState.calculator
                         ? 0
-                        : 200,
+                        : state == LayoutState.notes
+                            ? 440
+                            : state == LayoutState.both
+                                ? 279
+                                : state == LayoutState.bothWithHistory
+                                    ? 50
+                                    : state == LayoutState.calculatorWithHistory
+                                        ? 0
+                                        : 50, // 200 is default value that never been reached
                     child: Transform.translate(
                       offset: const Offset(0, 0),
                       child: Container(
@@ -97,7 +111,8 @@ class _MainPageState extends State<MainPage>
                       ),
                     ),
                   ),
-                  state == LayoutState.both
+                  state == LayoutState.both ||
+                          state == LayoutState.bothWithHistory
                       ? const SizedBox(height: 20)
                       : const SizedBox(),
                   AnimatedContainer(
@@ -105,20 +120,40 @@ class _MainPageState extends State<MainPage>
                     width: state == LayoutState.initial ||
                             state == LayoutState.notes
                         ? 0
-                        : 200,
+                        : state == LayoutState.notes ||
+                                state == LayoutState.both ||
+                                state == LayoutState.bothWithHistory
+                            ? 310
+                            : 310, // 200 is default value that never been reached
                     height: state == LayoutState.initial ||
                             state == LayoutState.notes
                         ? 0
-                        : 200,
+                        : state == LayoutState.calculator
+                            ? 440
+                            : state == LayoutState.both
+                                ? 151
+                                : state == LayoutState.bothWithHistory
+                                    ? 375
+                                    : 440, // 200 is default value that never been reached
                     child: Transform.translate(
                       offset: const Offset(0, 0),
                       child: Container(
-                        width: 200,
-                        height: 200,
                         color: Colors.red,
                         child: Center(
-                          child: const Text("Calculator"),
-                        ),
+                            child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text("Calculator"),
+                            // button for turn history
+                            ElevatedButton(
+                                onPressed: () {
+                                  context
+                                      .read<LayoutCubit>()
+                                      .toggleCalculatorHistory();
+                                },
+                                child: const Text("Turn history"))
+                          ],
+                        )),
                       ),
                     ),
                   ),
