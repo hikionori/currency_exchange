@@ -86,7 +86,7 @@ class _CurrencyInputFieldState extends State<CurrencyInputField> {
                     FilteringTextInputFormatter.allow(RegExp(r'[0-9]'))
                   ],
                   decoration: InputDecoration(
-                    hintText: "Amount",
+                    hintText: "0.00",
                     hintStyle: GoogleFonts.candal(
                         color: BaseColors.placeholderText,
                         fontSize: 20,
