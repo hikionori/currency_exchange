@@ -7,7 +7,6 @@ import 'package:currency_exchange/notes/presentation/widgets/view_edit_field.dar
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:isar/isar.dart';
 
 class NotesModule extends StatefulWidget {
   const NotesModule({
