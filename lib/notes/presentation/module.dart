@@ -442,7 +442,7 @@ class _NotesModuleState extends State<NotesModule> {
                       ..title = titleController.text
                       ..content = contentController.text));
                 setState(() {
-                  isCreating = !isCreating;
+                  selectedNote = null;
                   // clear text fields
                   titleController.clear();
                   contentController.clear();

@@ -22,6 +22,7 @@ class ViewEditField extends StatelessWidget {
           color: BaseColors.headerText,
           fontSize: 14,
           fontWeight: FontWeight.bold),
+      maxLines: 1,
       decoration: InputDecoration(
         hintText: 'Title',
         hintStyle: GoogleFonts.candal(
