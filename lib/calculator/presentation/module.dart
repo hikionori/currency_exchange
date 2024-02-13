@@ -1,13 +1,10 @@
 import 'package:currency_exchange/app/cubit/layout_cubit.dart';
 import 'package:currency_exchange/app/theme.dart';
-import 'package:currency_exchange/calculator/bloc/calculator_bloc.dart';
 import 'package:currency_exchange/calculator/presentation/widgets/calculator_full_view.dart';
 import 'package:currency_exchange/calculator/presentation/widgets/calculator_split_history_view.dart';
 import 'package:currency_exchange/calculator/presentation/widgets/calculator_split_view.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class CalculatorModule extends StatefulWidget {
   const CalculatorModule({
@@ -50,7 +47,14 @@ class _CalculatorModuleState extends State<CalculatorModule> {
                 resultController: _resultController);
           }
           if (state == LayoutState.bothWithHistory) {
-            return CalculatorSplitHistoryView(expressionController: _expressionController, resultController: _resultController);
+            return CalculatorSplitHistoryView(
+                expressionController: _expressionController,
+                resultController: _resultController);
+          }
+          if (state == LayoutState.calculatorWithHistory) {
+            return CalculatorSplitHistoryView(
+                expressionController: _expressionController,
+                resultController: _resultController);
           }
           return const SizedBox();
         },

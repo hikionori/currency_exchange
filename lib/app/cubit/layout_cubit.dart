@@ -20,7 +20,7 @@ class LayoutCubit extends Cubit<LayoutState> {
         emit(LayoutState.notes);
         break;
       case LayoutState.calculatorWithHistory:
-        emit(LayoutState.notes);
+        emit(LayoutState.initial);
         break;
       case LayoutState.bothWithHistory:
         emit(LayoutState.notes);

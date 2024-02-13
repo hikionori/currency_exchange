@@ -64,6 +64,6 @@ double getCalculatorHeight(LayoutState state) {
   } else if (state == LayoutState.bothWithHistory) {
     return 375;
   } else {
-    return 440; // Default value
+    return 490; // Default value
   }
 }

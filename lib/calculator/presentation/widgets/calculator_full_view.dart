@@ -140,81 +140,112 @@ class _CalculatorFullViewState extends State<CalculatorFullView> {
                       color: BaseColors.headerText,
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    child: Expanded(
-                      child: GridView.count(
-                        crossAxisCount: 4,
-                        shrinkWrap: true,
-                        padding: const EdgeInsets.all(10),
-                        children: [
-                          ...[
-                            "AC",
-                            "()",
-                            "%",
-                            "/",
-                            "7",
-                            "8",
-                            "9",
-                            "*",
-                            "4",
-                            "5",
-                            "6",
-                            "-",
-                            "1",
-                            "2",
-                            "3",
-                            "+",
-                            "0",
-                            ".",
-                            "=",
-                            Icons.backspace_outlined,
-                          ].map(
-                            (e) => GestureDetector(
-                              onTap: () {
-                                if (e == "AC") {
-                                  widget._expressionController.text = "";
-                                  widget._resultController.text = "";
-                                } else if (e == "=") {
-                                  context.read<CalculatorBloc>().add(
-                                      CalculatorCalculate(
-                                          widget._expressionController.text));
-                                } else if (e == Icons.backspace_outlined) {
-                                  widget._expressionController.text = widget
-                                      ._expressionController.text
-                                      .substring(
-                                          0,
-                                          widget._expressionController.text
-                                                  .length -
-                                              1);
+                    child: GridView.count(
+                      crossAxisCount: 4,
+                      shrinkWrap: true,
+                      padding: const EdgeInsets.all(10),
+                      children: [
+                        ...[
+                          "AC",
+                          "()",
+                          "%",
+                          "/",
+                          "7",
+                          "8",
+                          "9",
+                          "*",
+                          "4",
+                          "5",
+                          "6",
+                          "-",
+                          "1",
+                          "2",
+                          "3",
+                          "+",
+                          "0",
+                          ".",
+                          "=",
+                          Icons.backspace_outlined,
+                        ].map(
+                          (e) => GestureDetector(
+                            onTap: () {
+                              bool isNumeric(String s) {
+                                return double.tryParse(s) != null;
+                              }
+
+                              if (e == "AC") {
+                                widget._expressionController.text = "";
+                                widget._resultController.text = "";
+                              } else if (e == "=") {
+                                context.read<CalculatorBloc>().add(
+                                    CalculatorCalculate(
+                                        widget._expressionController.text));
+                              } else if (e == Icons.backspace_outlined) {
+                                widget._expressionController.text =
+                                    widget._expressionController.text.substring(
+                                        0,
+                                        widget._expressionController.text
+                                                .length -
+                                            1);
+                              } else if (e == "()") {
+                                String expression =
+                                    widget._expressionController.text;
+                                if (expression.isEmpty) {
+                                  widget._expressionController.text = '(';
                                 } else {
-                                  widget._expressionController.text +=
-                                      e as String;
+                                  String lastChar =
+                                      expression[expression.length - 1];
+                                  int openBrackets =
+                                      '('.allMatches(expression).length;
+                                  int closeBrackets =
+                                      ')'.allMatches(expression).length;
+
+                                  if (isNumeric(lastChar) || lastChar == ')') {
+                                    if (openBrackets > closeBrackets) {
+                                      widget._expressionController.text =
+                                          '$expression)';
+                                    } else {
+                                      widget._expressionController.text =
+                                          '$expression(';
+                                    }
+                                  } else if (lastChar != '(' &&
+                                      openBrackets > closeBrackets) {
+                                    widget._expressionController.text =
+                                        '$expression)';
+                                  } else {
+                                    widget._expressionController.text =
+                                        '$expression(';
+                                  }
                                 }
-                              },
-                              child: Container(
-                                margin: const EdgeInsets.all(5),
-                                decoration: BoxDecoration(
-                                  color: BaseColors.background,
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: Center(
-                                  child: e is String
-                                      ? Text(
-                                          e as String,
-                                          style: GoogleFonts.candal(
-                                            color: BaseColors.headerText,
-                                            fontSize: 20,
-                                          ),
-                                        )
-                                      : Icon(
-                                          e as IconData,
+                              } else {
+                                widget._expressionController.text +=
+                                    e as String;
+                              }
+                            },
+                            child: Container(
+                              margin: const EdgeInsets.all(5),
+                              decoration: BoxDecoration(
+                                color: BaseColors.background,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Center(
+                                child: e is String
+                                    ? Text(
+                                        e as String,
+                                        style: GoogleFonts.candal(
                                           color: BaseColors.headerText,
+                                          fontSize: 20,
                                         ),
-                                ),
+                                      )
+                                    : Icon(
+                                        e as IconData,
+                                        color: BaseColors.headerText,
+                                      ),
                               ),
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 ],

@@ -2,8 +2,9 @@ import 'package:currency_exchange/app/cubit/layout_cubit.dart';
 import 'package:currency_exchange/app/theme.dart';
 import 'package:currency_exchange/calculator/bloc/calculator_bloc.dart';
 import 'package:currency_exchange/calculator/models/calculation_model.dart';
+import 'package:currency_exchange/calculator/presentation/widgets/current_values_in_history.dart';
+import 'package:currency_exchange/calculator/presentation/widgets/history_app_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -32,60 +33,8 @@ class _CalculatorSplitHistoryViewState
     return Stack(
       children: [
         // app bar for leaving history view
-        Positioned(
-          top: 0,
-          left: 0,
-          right: 0,
-          child: Container(
-            width: MediaQuery.of(context).size.width,
-            height: 50,
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            decoration: BoxDecoration(
-              color: BaseColors.background,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                GestureDetector(
-                  onTap: () => {
-                    BlocProvider.of<LayoutCubit>(context)
-                        .toggleCalculatorHistory()
-                  },
-                  child: Container(
-                    child: const Icon(
-                      Icons.arrow_back,
-                      size: 25,
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Text("History",
-                    style: GoogleFonts.candal(
-                      color: BaseColors.headerText,
-                      fontSize: 20,
-                    )),
-                const Spacer(),
-                GestureDetector(
-                  onTap: () => {
-                    BlocProvider.of<CalculatorBloc>(context)
-                        .add(CalculatorClearHistory())
-                  },
-                  child: Container(
-                    child: const Icon(
-                      Icons.delete,
-                      size: 25,
-                      color: BaseColors.headerText,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-
+        const HistoryAppBar(),
         // view
-
         Positioned(
           top: 50,
           left: 0,
@@ -104,17 +53,45 @@ class _CalculatorSplitHistoryViewState
                 children: [
                   BlocBuilder<CalculatorBloc, CalculatorState>(
                     builder: (context, state) {
+                      if (state is CalculatorCalculated) {
+                        // resend history view event
+                        context
+                            .read<CalculatorBloc>()
+                            .add(CalculatorViewHistory());
+                      }
                       if (state is CalculatorHistory) {
-                        final history = state.calculations;
+                        final history = state.calculations.reversed
+                            .toList()
+                            .take(context.read<LayoutCubit>().state ==
+                                    LayoutState.calculatorWithHistory
+                                ? 4
+                                : 3)
+                            .toList();
+
                         return SingleChildScrollView(
                           child: Column(
                             children: List.generate(
-                              history.length,
+                              history.length > 4 ? 4 : history.length,
                               (index) {
-                                final calculation = history[index];
+                                final calculation =
+                                    history[history.length - index - 1];
                                 return ListTile(
-                                  title: Text(calculation.expression!),
-                                  subtitle: Text(calculation.result.toString()),
+                                  titleTextStyle: GoogleFonts.candal(
+                                    color: BaseColors.headerText,
+                                    fontSize: 20,
+                                  ),
+                                  subtitleTextStyle: GoogleFonts.candal(
+                                    color:
+                                        BaseColors.headerText.withOpacity(0.8),
+                                    fontSize: 16,
+                                  ),
+                                  title: Align(
+                                      alignment: Alignment.topRight,
+                                      child: Text(calculation.expression!)),
+                                  subtitle: Align(
+                                      alignment: Alignment.bottomRight,
+                                      child:
+                                          Text(calculation.result.toString())),
                                 );
                               },
                             ),
@@ -125,15 +102,15 @@ class _CalculatorSplitHistoryViewState
                       }
                     },
                   ),
-                  const SizedBox(height: 10),
-                  Text('Current value of controllers:'),
-                  Text('Expression: ${widget._expressionController.text}'),
-                  Text('Result: ${widget._resultController.text}'),
                 ],
               ),
             ),
           ),
         ),
+        // show current expression and result
+        CurrentValuesInHistory(
+            expressionController: widget._expressionController,
+            resultController: widget._resultController),
       ],
     );
   }
