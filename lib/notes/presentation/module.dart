@@ -340,7 +340,8 @@ class _NotesModuleState extends State<NotesModule> {
               ),
             ),
           ),
-          Align(
+          AnimatedAlign(
+            duration: const Duration(milliseconds: 200),
             alignment: Alignment.bottomCenter,
             child: GestureDetector(
               onTap: () {
@@ -426,7 +427,8 @@ class _NotesModuleState extends State<NotesModule> {
               ),
             ),
           ),
-          Align(
+          AnimatedAlign(
+            duration: const Duration(milliseconds: 200),
             alignment: Alignment.bottomCenter,
             child: GestureDetector(
               onTap: () {
