@@ -35,7 +35,7 @@ class CalculatorBloc extends Bloc<CalculatorEvent, CalculatorState> {
           await _currencyConvertingService.calculate(event.expression);
       emit(CalculatorCalculated(event.expression, result));
     } catch (e) {
-      emit(CalculatorError(e.toString()));
+      emit(const CalculatorError("Error"));
     }
   }
 
@@ -45,7 +45,7 @@ class CalculatorBloc extends Bloc<CalculatorEvent, CalculatorState> {
       final calculations = await _currencyConvertingService.getCalculations();
       emit(CalculatorHistory(calculations));
     } catch (e) {
-      emit(CalculatorError(e.toString()));
+      emit(const CalculatorError("Error"));
     }
   }
 
@@ -55,7 +55,7 @@ class CalculatorBloc extends Bloc<CalculatorEvent, CalculatorState> {
       await _currencyConvertingService.clearHistory();
       emit(CalculatorHistoryCleared());
     } catch (e) {
-      emit(CalculatorError(e.toString()));
+      emit(const CalculatorError("Error"));
     }
   }
 }
