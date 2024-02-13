@@ -29,7 +29,7 @@ double getNotesHeight(LayoutState state) {
       return 0;
 
     case LayoutState.notes:
-      return 440;
+      return 490;
 
     case LayoutState.both:
       return 279;
@@ -58,7 +58,7 @@ double getCalculatorHeight(LayoutState state) {
   if (state == LayoutState.initial || state == LayoutState.notes) {
     return 0;
   } else if (state == LayoutState.calculator) {
-    return 440;
+    return 490;
   } else if (state == LayoutState.both) {
     return 151;
   } else if (state == LayoutState.bothWithHistory) {

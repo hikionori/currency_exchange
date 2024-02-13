@@ -6,16 +6,22 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class CalculatorSplitView extends StatelessWidget {
+class CalculatorSplitView extends StatefulWidget {
   const CalculatorSplitView({
     super.key,
     required TextEditingController expressionController,
     required TextEditingController resultController,
-  }) : _expressionController = expressionController, _resultController = resultController;
+  })  : _expressionController = expressionController,
+        _resultController = resultController;
 
   final TextEditingController _expressionController;
   final TextEditingController _resultController;
 
+  @override
+  State<CalculatorSplitView> createState() => _CalculatorSplitViewState();
+}
+
+class _CalculatorSplitViewState extends State<CalculatorSplitView> {
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -37,7 +43,7 @@ class CalculatorSplitView extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 TextField(
-                  controller: _expressionController,
+                  controller: widget._expressionController,
                   onSubmitted: (value) {
                     context
                         .read<CalculatorBloc>()
@@ -46,8 +52,12 @@ class CalculatorSplitView extends StatelessWidget {
                   },
                   textAlign: TextAlign.right,
                   inputFormatters: [
-                    FilteringTextInputFormatter.allow(
-                        RegExp(r'[0-9\+\-\*\/]'))
+                    FilteringTextInputFormatter(
+                      RegExp(
+                          r'[0-9\+\-\*\/%\(\)]|(sin|cos|tan|asin|acos|atan|log|exp|sqrt|pow|pi|e)(\([0-9\+\-\*\/%]*\))?'),
+                      allow: true,
+                      replacementString: "",
+                    ),
                   ],
                   style: GoogleFonts.candal(
                     color: BaseColors.headerText,
@@ -65,11 +75,11 @@ class CalculatorSplitView extends StatelessWidget {
                 BlocListener<CalculatorBloc, CalculatorState>(
                   listener: (context, state) {
                     if (state is CalculatorCalculated) {
-                      _resultController.text = "${state.result}";
+                      widget._resultController.text = "${state.result}";
                     }
                   },
                   child: TextField(
-                    controller: _resultController,
+                    controller: widget._resultController,
                     textAlign: TextAlign.right,
                     enabled: false,
                     style: GoogleFonts.candal(
@@ -98,9 +108,11 @@ class CalculatorSplitView extends StatelessWidget {
                     ),
                     const SizedBox(width: 10),
                     GestureDetector(
-                      onTap: () => {
+                      onTap: () {
                         BlocProvider.of<LayoutCubit>(context)
-                            .toggleCalculatorHistory()
+                            .toggleCalculatorHistory();
+                        BlocProvider.of<CalculatorBloc>(context)
+                            .add(CalculatorViewHistory());
                       },
                       child: Container(
                         decoration: BoxDecoration(
@@ -112,6 +124,26 @@ class CalculatorSplitView extends StatelessWidget {
                         child: const Icon(
                           Icons.history,
                           size: 25,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    GestureDetector(
+                      onTap: () => {
+                        widget._expressionController.clear(),
+                        widget._resultController.clear(),
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.red[400],
+                          border: Border.all(
+                              color: BaseColors.headerText, width: 2),
+                        ),
+                        child: const Icon(
+                          Icons.clear_rounded,
+                          size: 25,
+                          color: BaseColors.background,
                         ),
                       ),
                     )

@@ -83,7 +83,7 @@ class _CurrencyInputFieldState extends State<CurrencyInputField> {
                   controller: widget.controller,
                   cursorColor: BaseColors.headerText,
                   inputFormatters: [
-                    FilteringTextInputFormatter.allow(RegExp(r'[0-9]'))
+                    FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$'))
                   ],
                   decoration: InputDecoration(
                     hintText: "0.00",

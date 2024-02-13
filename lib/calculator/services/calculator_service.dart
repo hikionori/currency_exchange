@@ -49,7 +49,9 @@ class CalculatorService {
   // clean calculations history
   Future<void> clearHistory() async {
     try {
-      await isar.calculations.clear();
+      await isar.writeTxn(() async {
+        await isar.calculations.clear();
+      });
     } catch (e) {
       rethrow;
     }
