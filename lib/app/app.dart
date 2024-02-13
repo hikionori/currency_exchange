@@ -1,6 +1,8 @@
 import 'package:currency_exchange/app/cubit/layout_cubit.dart';
 import 'package:currency_exchange/app/theme.dart';
 import 'package:currency_exchange/app/utils.dart';
+import 'package:currency_exchange/calculator/bloc/calculator_bloc.dart';
+import 'package:currency_exchange/calculator/presentation/module.dart';
 import 'package:currency_exchange/currency_converter/bloc/currency_bloc.dart';
 import 'package:currency_exchange/currency_converter/presentation/module.dart';
 import 'package:currency_exchange/notes/bloc/note_bloc.dart';
@@ -24,6 +26,7 @@ class MyApp extends StatelessWidget {
           BlocProvider<NoteBloc>(
             create: (context) => NoteBloc(),
           ),
+          BlocProvider<CalculatorBloc>(create: (context) => CalculatorBloc()),
           BlocProvider<CurrencyBloc>(
             create: (context) => CurrencyBloc(),
           ),
@@ -75,35 +78,9 @@ class _MainPageState extends State<MainPage>
                             state == LayoutState.bothWithHistory
                         ? const SizedBox(height: 20)
                         : const SizedBox(),
-                    AnimatedContainer(
-                      duration: const Duration(milliseconds: 200),
-                      width: calculatorWidth,
-                      height: calculatorHeight,
-                      child: Transform.translate(
-                        offset: const Offset(0, 0),
-                        child: Container(
-                          color: Colors.red,
-                          child: SingleChildScrollView(
-                            child: Center(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const Text("Calculator"),
-                                  // button for turn history
-                                  ElevatedButton(
-                                      onPressed: () {
-                                        context
-                                            .read<LayoutCubit>()
-                                            .toggleCalculatorHistory();
-                                      },
-                                      child: const Text("Turn history"))
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
+                    CalculatorModule(
+                        calculatorWidth: calculatorWidth,
+                        calculatorHeight: calculatorHeight),
                   ],
                 );
               },

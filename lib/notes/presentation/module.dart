@@ -87,6 +87,9 @@ class _NotesModuleState extends State<NotesModule> {
                               onTap: () {
                                 setState(() {
                                   selectedNote = null;
+
+                                  titleController.clear();
+                                  contentController.clear();
                                 });
                               },
                               child: const Icon(
