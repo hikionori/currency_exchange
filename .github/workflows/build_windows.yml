@@ -26,4 +26,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: windows-application
-        path: build/windows/runner/Release/*.exe
+        path: build/windows/runner/Release/currency_exchange.exe
