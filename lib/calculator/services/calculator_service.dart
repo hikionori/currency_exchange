@@ -17,7 +17,7 @@ class CalculatorService {
 
   // Functions for work with database and calculations
   // add new calculation to database
-  Future<void> calculate(String expression) async {
+  Future<double> calculate(String expression) async {
     try {
       double result = _calculateExpression(expression);
       // add new calculation to database
@@ -28,6 +28,7 @@ class CalculatorService {
           ..createdAt = DateTime.now();
         await isar.calculations.put(calculation);
       });
+      return result;
     } catch (e) {
       rethrow;
     }

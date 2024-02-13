@@ -1,3 +1,5 @@
+import 'package:currency_exchange/calculator/models/calculation_model.dart';
+import 'package:currency_exchange/calculator/services/calculator_service.dart';
 import 'package:currency_exchange/currency_converter/services/currency_converting_service.dart';
 import 'package:currency_exchange/notes/models/note_model.dart';
 import 'package:currency_exchange/notes/services/note_service.dart';
@@ -10,11 +12,15 @@ final getIt = GetIt.instance;
 Future<void> setup() async {
   final dir = await getApplicationDocumentsDirectory();
 
-  final List<CollectionSchema<dynamic>> collections = [NoteSchema];
+  final List<CollectionSchema<dynamic>> collections = [
+    NoteSchema,
+    CalculationSchema
+  ];
   final isar = await Isar.open(collections, directory: dir.path);
 
   getIt.registerSingleton<Isar>(isar);
   getIt.registerSingleton<NoteService>(NoteService());
   getIt.registerSingleton<CurrencyConvertingService>(
       CurrencyConvertingService());
+  getIt.registerSingleton<CalculatorService>(CalculatorService());
 }
