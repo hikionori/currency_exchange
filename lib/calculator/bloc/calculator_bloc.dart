@@ -12,16 +12,16 @@ class CalculatorBloc extends Bloc<CalculatorEvent, CalculatorState> {
       getIt.get<CalculatorService>();
 
   CalculatorBloc() : super(CalculatorInitial()) {
-    on<CalculatorEvent>((event, emit) {
+    on<CalculatorEvent>((event, emit) async {
       switch (event.runtimeType) {
         case CalculatorCalculate:
-          _handleCalculate(event as CalculatorCalculate, emit);
+          await _handleCalculate(event as CalculatorCalculate, emit);
           break;
         case CalculatorViewHistory:
-          _handleViewHistory(event as CalculatorViewHistory, emit);
+          await _handleViewHistory(event as CalculatorViewHistory, emit);
           break;
         case CalculatorClearHistory:
-          _handleClearHistory(event as CalculatorClearHistory, emit);
+          await _handleClearHistory(event as CalculatorClearHistory, emit);
           break;
       }
     });
